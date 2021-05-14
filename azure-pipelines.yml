@@ -86,19 +86,15 @@ stages:
               deploymentMethod: 'auto'
 
   - job:
-    displayName: Manual Intervention
+    displayName: Approve and swap
+    pool:
+      vmImage: $(vmImageName)
     steps:
       - task: ManualValidation@0
         inputs:
           notifyUsers: 'adam.kadzban@relativity.com'
           instructions: 'Hey go approve the deployment'
           onTimeout: reject
-
-  - job:
-    displayName: Slot Swap
-    pool:
-      vmImage: $vmImageName)
-    steps:
       - task: AzureAppServiceManage@0
         inputs:
           azureSubscription: '$(azureSubscription)'
