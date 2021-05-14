@@ -84,11 +84,26 @@ stages:
               slotName: 'stage'
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
               deploymentMethod: 'auto'
-          - task: AzureAppServiceManage@0
-            inputs:
-              azureSubscription: '$(azureSubscription)'
-              Action: 'Swap Slots'
-              WebAppName: '$(functionAppName)'
-              ResourceGroupName: 'AzureFunction2'
-              SourceSlot: 'stage'
-              SwapWithProduction: true
+
+  - job:
+    displayName: Manual Intervention
+    steps:
+      - task: ManualValidation@0
+        inputs:
+          notifyUsers: 'adam.kadzban@relativity.com'
+          instructions: 'Hey go approve the deployment'
+          onTimeout: reject
+
+  - job:
+    displayName: Slot Swap
+    pool:
+      vmImage: $vmImageName)
+    steps:
+      - task: AzureAppServiceManage@0
+        inputs:
+          azureSubscription: '$(azureSubscription)'
+          Action: 'Swap Slots'
+          WebAppName: '$(functionAppName)'
+          ResourceGroupName: 'AzureFunction2'
+          SourceSlot: 'stage'
+          SwapWithProduction: true
