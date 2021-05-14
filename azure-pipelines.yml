@@ -11,6 +11,8 @@ trigger:
     exclude:
     - README.md
 
+pr: none
+
 variables:
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'e0fbc786-67e5-421f-8d33-19cd6b7e246c'
