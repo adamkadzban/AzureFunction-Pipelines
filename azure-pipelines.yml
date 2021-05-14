@@ -68,9 +68,12 @@ stages:
 
           steps:
           - task: AzureFunctionApp@1
-            displayName: 'Azure functions app deploy'
             inputs:
               azureSubscription: '$(azureSubscription)'
-              appType: functionApp
+              appType: 'functionApp'
               appName: $(functionAppName)
+              deployToSlotOrASE: true
+              resourceGroupName: 'AzureFunction2'
+              slotName: 'stage'
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              deploymentMethod: 'auto'
