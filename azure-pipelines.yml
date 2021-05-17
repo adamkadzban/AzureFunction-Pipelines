@@ -87,6 +87,7 @@ stages:
 
     - job:
       displayName: Approve
+      dependsOn: Deploy
       pool: server
       steps:
         - task: ManualValidation@0
@@ -97,6 +98,7 @@ stages:
 
     - job:
       displayName: Swap
+      dependsOn: Approve
       pool:
         vmImage: $(vmImageName)
       steps:
