@@ -85,7 +85,7 @@ stages:
                 package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
                 deploymentMethod: 'auto'
 
-    - job:
+    - job: Approve
       displayName: Approve
       dependsOn: Deploy
       pool: server
@@ -96,7 +96,7 @@ stages:
             instructions: 'Hey go approve the deployment'
             onTimeout: reject
 
-    - job:
+    - job: Swap
       displayName: Swap
       dependsOn: Approve
       pool:
