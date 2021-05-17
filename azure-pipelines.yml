@@ -85,13 +85,14 @@ stages:
                 package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
                 deploymentMethod: 'auto'
 
-- stage: Approve and Swap
+- stage: Approve_and_Swap
   displayName: Approve and Swap Stage
   dependsOn: Deploy
   condition: succeeded()
   jobs:
     - job:
       displayName: Approve
+      pool: server
       steps:
         - task: ManualValidation@0
           inputs:
