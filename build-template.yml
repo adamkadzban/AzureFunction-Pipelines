@@ -13,12 +13,14 @@ parameters:
 stages:
 - stage: Build
   displayName: Build stage
+  variables: 
+    vmImage: ${{ parameters.vmImage }}
 
   jobs:
   - job: Build
     displayName: Build
     pool:
-      vmImage: ${{ parameters.vmImage }}
+      vmImage: $(vmImage)
 
     steps:
     - task: PowerShell@2

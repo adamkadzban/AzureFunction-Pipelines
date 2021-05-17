@@ -1,10 +1,14 @@
 parameters:
 - name: vmImage
   type: string
-  default: 'vs2017-win2016'
+  default: ''
   values:
   - 'windows-latest'
   - 'vs2017-win2016'
+
+- name: dependsOn
+  type: object
+  default: []
 
 - name: sourceSlot
   type: string
@@ -17,8 +21,9 @@ parameters:
 jobs:
 - job: Swap
   displayName: Swap slots
+  dependsOn: ${{ parameters.dependsOn }}
   pool:
-    vmImage: $(vmImage)
+    vmImage: ${{ parameters.vmImage }}
   steps:
   - task: AzureAppServiceManage@0
     inputs:

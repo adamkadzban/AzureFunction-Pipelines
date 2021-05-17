@@ -11,12 +11,12 @@ pr: none
 variables:
   azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
   functionAppName: AzureFunction-Pipelines
-  vmImageName: vs2017-win2016
+  vmImageName: 'vs2017-win2016'
 
 stages:
   - template: build-template.yml
     parameters:
-      vmImage: $(vmImageName)
+      vmImage: ${{ variables.vmImageName }}
       projectName: AzureFunction2
   - stage: Deploy
     displayName: Deploy stage
@@ -54,7 +54,7 @@ stages:
               onTimeout: reject
       - template: swap-template.yml
         parameters:
-          vmImage: $(vmImageName)
-          sourceSlot: stage
-          targetSlot: production
-        dependsOn: Approve
+          vmImage: ${{ variables.vmImageName }}
+          sourceSlot: 'stage'
+          targetSlot: 'production'
+          dependsOn: 'Approve'
