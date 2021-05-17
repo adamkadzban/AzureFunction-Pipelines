@@ -63,47 +63,52 @@ stages:
   condition: succeeded()
 
   jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    environment: 'development'
-    pool:
-      vmImage: $(vmImageName)
+    - deployment: Deploy
+      displayName: Deploy
+      environment: 'development'
+      pool:
+        vmImage: $(vmImageName)
 
-    strategy:
-      runOnce:
-        deploy:
+      strategy:
+        runOnce:
+          deploy:
 
-          steps:
-          - task: AzureFunctionApp@1
-            inputs:
-              azureSubscription: '$(azureSubscription)'
-              appType: 'functionApp'
-              appName: $(functionAppName)
-              deployToSlotOrASE: true
-              resourceGroupName: 'AzureFunction2'
-              slotName: 'stage'
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-              deploymentMethod: 'auto'
+            steps:
+            - task: AzureFunctionApp@1
+              inputs:
+                azureSubscription: '$(azureSubscription)'
+                appType: 'functionApp'
+                appName: $(functionAppName)
+                deployToSlotOrASE: true
+                resourceGroupName: 'AzureFunction2'
+                slotName: 'stage'
+                package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+                deploymentMethod: 'auto'
 
-  - job:
-    displayName: Approve
-    steps:
-      - task: ManualValidation@0
-        inputs:
-          notifyUsers: 'adam.kadzban@relativity.com'
-          instructions: 'Hey go approve the deployment'
-          onTimeout: reject
+- stage: Approve and Swap
+  displayName: Approve and Swap Stage
+  dependsOn: Deploy
+  condition: succeeded()
+  jobs:
+    - job:
+      displayName: Approve
+      steps:
+        - task: ManualValidation@0
+          inputs:
+            notifyUsers: 'adam.kadzban@relativity.com'
+            instructions: 'Hey go approve the deployment'
+            onTimeout: reject
 
-  - job:
-    displayName: Swap
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-      - task: AzureAppServiceManage@0
-        inputs:
-          azureSubscription: '$(azureSubscription)'
-          Action: 'Swap Slots'
-          WebAppName: '$(functionAppName)'
-          ResourceGroupName: 'AzureFunction2'
-          SourceSlot: 'stage'
-          SwapWithProduction: true
+    - job:
+      displayName: Swap
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+        - task: AzureAppServiceManage@0
+          inputs:
+            azureSubscription: '$(azureSubscription)'
+            Action: 'Swap Slots'
+            WebAppName: '$(functionAppName)'
+            ResourceGroupName: 'AzureFunction2'
+            SourceSlot: 'stage'
+            SwapWithProduction: true
