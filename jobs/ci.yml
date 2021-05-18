@@ -8,6 +8,6 @@ trigger: none
 #    - '*'
 
 stages:
-- template: build-template.yml
+- template: templates/build-template.yml
   parameters:
     vmImage: 'vs2017-win2016'

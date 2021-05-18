@@ -14,7 +14,7 @@ variables:
   vmImageName: 'vs2017-win2016'
 
 stages:
-  - template: build-template.yml
+  - template: templates/build-template.yml
     parameters:
       vmImage: ${{ variables.vmImageName }}
   - stage: Deploy
@@ -51,7 +51,7 @@ stages:
               notifyUsers: adam.kadzban@relativity.com
               instructions: Hey go approve the deployment
               onTimeout: reject
-      - template: swap-template.yml
+      - template: templates/swap-template.yml
         parameters:
           vmImage: ${{ variables.vmImageName }}
           sourceSlot: 'stage'

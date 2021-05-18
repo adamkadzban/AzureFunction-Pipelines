@@ -14,7 +14,7 @@ parameters:
   default: false
 
 jobs:
-- template: swap-template.yml
+- template: templates/swap-template.yml
   parameters:
     vmImage: 'vs2017-win2016'
     sourceSlot: ${{ parameters.sourceSlot }}

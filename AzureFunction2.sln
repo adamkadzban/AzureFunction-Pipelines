@@ -8,11 +8,20 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E23F62A2-5254-46B9-8D99-B051549ABAE2}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		azure-pipelines.yml = azure-pipelines.yml
-		build-template.yml = build-template.yml
-		ci.yml = ci.yml
 		README.md = README.md
-		swap-template.yml = swap-template.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jobs", "jobs", "{F2B09308-8C79-4F00-9EEB-9319AE6A334B}"
+	ProjectSection(SolutionItems) = preProject
+		jobs\cd.yml = jobs\cd.yml
+		jobs\ci.yml = jobs\ci.yml
+		jobs\swap.yml = jobs\swap.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{EEDDB4DE-054C-455F-AB9C-7B49DC02DAC7}"
+	ProjectSection(SolutionItems) = preProject
+		jobs\templates\build-template.yml = jobs\templates\build-template.yml
+		jobs\templates\swap-template.yml = jobs\templates\swap-template.yml
 	EndProjectSection
 EndProject
 Global
@@ -28,6 +37,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F2B09308-8C79-4F00-9EEB-9319AE6A334B} = {E23F62A2-5254-46B9-8D99-B051549ABAE2}
+		{EEDDB4DE-054C-455F-AB9C-7B49DC02DAC7} = {F2B09308-8C79-4F00-9EEB-9319AE6A334B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {737C5619-E731-4AA0-9F57-99E0C42D92F7}
