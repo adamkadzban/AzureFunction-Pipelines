@@ -1,0 +1,22 @@
+# Don't ever run automatically
+trigger: none
+pr: none
+
+parameters:
+- name: sourceSlot
+  type: string
+  default: stage
+- name: targetSlot
+  type: string
+  default: production
+- name: stageToProduction
+  type: boolean
+  default: false
+
+jobs:
+- template: swap-template.yml
+  parameters:
+    vmImage: 'vs2017-win2016'
+    sourceSlot: ${{ parameters.sourceSlot }}
+    targetSlot: ${{ parameters.targetSlot }}
+    stageToProd: ${{ parameters.stageToProduction }}

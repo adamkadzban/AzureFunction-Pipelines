@@ -1,7 +1,7 @@
 parameters:
 - name: vmImage
   type: string
-  default: ''
+  default: 'vs2017-win2016'
   values:
   - 'windows-latest'
   - 'vs2017-win2016'
@@ -18,6 +18,10 @@ parameters:
   type: string
   default: 'production'
 
+- name: stageToProd
+  type: boolean
+  default: false
+
 jobs:
 - job: Swap
   displayName: Swap slots
@@ -25,12 +29,24 @@ jobs:
   pool:
     vmImage: ${{ parameters.vmImage }}
   steps:
-  - task: AzureAppServiceManage@0
-    inputs:
-      azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
-      Action: 'Swap Slots'
-      WebAppName: AzureFunction-Pipelines
-      ResourceGroupName: AzureFunction2
-      SourceSlot: ${{ parameters.sourceSlot }}
-      TargetSlot: ${{ parameters.targetSlot }}
-      SwapWithProduction: false
+  - ${{ if eq(parameters.stageToProd, false)}}:
+    - task: AzureAppServiceManage@0
+      displayName: Swap slots based on parameters
+      inputs:
+        azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
+        Action: 'Swap Slots'
+        WebAppName: AzureFunction-Pipelines
+        ResourceGroupName: AzureFunction2
+        SourceSlot: ${{ parameters.sourceSlot }}
+        TargetSlot: ${{ parameters.targetSlot }}
+        SwapWithProduction: false
+  - ${{ if eq(parameters.stageToProd, true)}}:
+    - task: AzureAppServiceManage@0
+      displayName: Swap stage to production
+      inputs:
+        azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
+        Action: 'Swap Slots'
+        WebAppName: AzureFunction-Pipelines
+        ResourceGroupName: AzureFunction2
+        SourceSlot: 'stage'
+        SwapWithProduction: true

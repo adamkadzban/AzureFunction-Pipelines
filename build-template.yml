@@ -6,10 +6,6 @@ parameters:
   - 'windows-latest'
   - 'vs2017-win2016'
 
-- name: projectName
-  type: string
-  default: ''
-
 stages:
 - stage: Build
   displayName: Build stage
@@ -23,17 +19,12 @@ stages:
       vmImage: $(vmImage)
 
     steps:
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: "Write-Host '$(System.DefaultWorkingDirectory)/${{ parameters.projectName }}/*.csproj'"
-    
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         command: 'build'
         projects: |
-          $(System.DefaultWorkingDirectory)/${{ parameters.projectName }}/*.csproj
+          $(System.DefaultWorkingDirectory)/**/*.sln
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
     - task: ArchiveFiles@2
