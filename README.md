@@ -25,3 +25,6 @@ If the CI pipeline is manually triggered on the `main` branch, then the Release 
 - Stage HTTP Trigger: https://azurefunction-pipelines-stage.azurewebsites.net/api/Function1
 - Azure Function App Task: https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-function-app?view=azure-devops
 - Azure App Service Manage Task: https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-app-service-manage?view=azure-devops
+
+
+Hi Aaron
