@@ -7,7 +7,14 @@ trigger: none
 #    include:
 #    - '*'
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: adamkadzban/AzureFunction-Pipelines-Templates
+      endpoint: adamkadzban
+
 stages:
-- template: templates/build-template.yml
+- template: build-template.yml@templates
   parameters:
     vmImage: 'vs2017-win2016'

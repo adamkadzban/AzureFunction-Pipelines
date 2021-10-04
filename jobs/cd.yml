@@ -8,13 +8,20 @@ trigger:
 
 pr: none
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: adamkadzban/AzureFunction-Pipelines-Templates
+      endpoint: adamkadzban
+
 variables:
   azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
   functionAppName: AzureFunction-Pipelines
   vmImageName: 'vs2017-win2016'
 
 stages:
-  - template: templates/build-template.yml
+  - template: build-template.yml@templates
     parameters:
       vmImage: ${{ variables.vmImageName }}
   - stage: Deploy
@@ -51,7 +58,7 @@ stages:
               notifyUsers: adam.kadzban@relativity.com
               instructions: Hey go approve the deployment
               onTimeout: reject
-      - template: templates/swap-template.yml
+      - template: swap-template.yml@templates
         parameters:
           vmImage: ${{ variables.vmImageName }}
           sourceSlot: 'stage'
