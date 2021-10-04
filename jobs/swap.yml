@@ -20,3 +20,4 @@ jobs:
     sourceSlot: ${{ parameters.sourceSlot }}
     targetSlot: ${{ parameters.targetSlot }}
     stageToProd: ${{ parameters.stageToProduction }}
+    connection: 'e0fbc786-67e5-421f-8d33-19cd6b7e246c'

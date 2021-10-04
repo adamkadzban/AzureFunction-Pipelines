@@ -9,7 +9,7 @@ parameters:
 stages:
 - stage: Build
   displayName: Build stage
-  variables: 
+  variables:
     vmImage: ${{ parameters.vmImage }}
 
   jobs:

@@ -5,6 +5,9 @@ parameters:
   values:
   - 'windows-latest'
   - 'vs2017-win2016'
+- name: connection
+  type: string
+  default: 'e0fbc786-67e5-421f-8d33-19cd6b7e246c'
 
 - name: dependsOn
   type: object
@@ -33,7 +36,7 @@ jobs:
     - task: AzureAppServiceManage@0
       displayName: Swap slots based on parameters
       inputs:
-        azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
+        azureSubscription: ${{ parameters.connection }}
         Action: 'Swap Slots'
         WebAppName: AzureFunction-Pipelines
         ResourceGroupName: AzureFunction2
@@ -44,7 +47,7 @@ jobs:
     - task: AzureAppServiceManage@0
       displayName: Swap stage to production
       inputs:
-        azureSubscription: e0fbc786-67e5-421f-8d33-19cd6b7e246c
+        azureSubscription: ${{ parameters.connection }}
         Action: 'Swap Slots'
         WebAppName: AzureFunction-Pipelines
         ResourceGroupName: AzureFunction2
